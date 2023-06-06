@@ -1,0 +1,162 @@
+﻿<UserControl x:Class="WeatherApp.Views.WeatherScreenView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:gif="http://wpfanimatedgif.codeplex.com"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WeatherApp.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid x:Name="main">
+        <Grid.Background>
+            <ImageBrush ImageSource="https://t3.ftcdn.net/jpg/02/28/37/48/360_F_228374822_swvpReqovxC0uM7awKLmwqEO8lyC0nki.jpg"/>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Border Grid.RowSpan="2"
+                CornerRadius="25"
+                BorderThickness="20"
+                BorderBrush="White"
+                MaxWidth="310"
+                MaxHeight="400"
+                MinWidth="150"
+                MinHeight="250">
+            <StackPanel Background="White"
+                        Margin="-2">
+                <TextBlock x:Name="City" Text="City" 
+                           Foreground="DodgerBlue"
+                           FontSize="40"
+                           FontWeight="Bold"
+                           TextAlignment="Center"/>
+                <TextBlock x:Name="Country" Text="Country" 
+                           Foreground="Gold"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           TextAlignment="Center"/>
+                <Image Source="{Binding ConditionImg}"
+                       Width="100"
+                       Height="100"
+                       VerticalAlignment="Center"/>
+                <TextBlock x:Name="Temp" Text="Temperature" 
+                           Foreground="Gold"
+                           FontSize="25"
+                           FontWeight="SemiBold"
+                           TextAlignment="Center"/>
+                <TextBlock x:Name="Description" Text="Description" 
+                           Foreground="DodgerBlue"
+                           FontSize="30"
+                           FontWeight="SemiBold"
+                           TextAlignment="Center"/>
+                <TextBlock x:Name="AvgTemp" Text="Min-Max Temperature" 
+                           Foreground="Gold"
+                           FontSize="20"
+                           FontWeight="ExtraLight"
+                           TextAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+
+        <Border Grid.Column="1"
+                CornerRadius="15"
+                BorderThickness="7"
+                BorderBrush="White"
+                MaxWidth="310"
+                MaxHeight="60"
+                MinWidth="150"
+                MinHeight="40"
+                Margin="0, 0, 0, -15">
+            <StackPanel Orientation="Horizontal"
+                        Background="White"
+                        MaxHeight="60"
+                        MinHeight="40"
+                        VerticalAlignment="Stretch"
+                        Margin="-1">
+                <TextBox x:Name="InputCity"
+                         Style="{DynamicResource TextBoxWithoutBorder}"
+                         Foreground="DodgerBlue"
+                         Height="30"
+                         Width="250"
+                         FontSize="20"
+                         FontWeight="SemiBold"/>
+                <Button x:Name="LoadWeatherByCity"
+                        Style="{DynamicResource ButtonRounded}" 
+                        Height="40"
+                        Width="40">
+                    <Image Source="https://img.freepik.com/premium-photo/3d-icon-online-search-illustration_738723-30.jpg?w=2000"/>
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Column="1"
+                Grid.Row="1"
+                CornerRadius="15"
+                BorderThickness="20"
+                BorderBrush="White"
+                MaxWidth="310"
+                MaxHeight="310"
+                MinWidth="150"
+                MinHeight="200"
+                Margin="0, -10, 0, 0">
+            <StackPanel Background="White"
+                        Margin="-1">
+                <Image Source="{Binding WindspeedImg}"
+                       Width="100"
+                       Height="100"/>
+                <TextBlock x:Name="Windspeed" Text="Wind speed" 
+                           Foreground="DodgerBlue"
+                           FontSize="25"
+                           FontWeight="SemiBold"
+                           TextAlignment="Center"/>
+                <ItemsControl ItemsSource="{Binding WeatherDays}"
+                              Height="100"
+                              Margin="0, 30, 0, 0"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="1"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Date}" 
+                                           Foreground="DodgerBlue"
+                                           FontSize="12"
+                                           FontWeight="SemiBold"
+                                           TextAlignment="Center"/>
+                                <Image Source="{Binding ConditionImg}"
+                                       Width="50"
+                                       Height="50"/>
+                                <TextBlock Text="{Binding AvgTemperature}"
+                                           Foreground="Gold"
+                                           FontSize="20"
+                                           FontWeight="SemiBold"
+                                           TextAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </Border>
+        <Canvas x:Name="LoadingIcon"
+                Visibility="Hidden"
+                Grid.ColumnSpan="2"
+                Grid.RowSpan="2">
+            <Canvas.Background>
+                <ImageBrush ImageSource="https://t3.ftcdn.net/jpg/02/28/37/48/360_F_228374822_swvpReqovxC0uM7awKLmwqEO8lyC0nki.jpg"/>
+            </Canvas.Background>
+            <Image gif:ImageBehavior.AnimatedSource="https://cdn.dribbble.com/users/2973561/screenshots/5757826/loading__.gif"
+                   Height="100"
+                   Width="100"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center" Canvas.Left="420" Canvas.Top="175"/>
+        </Canvas>
+    </Grid>
+</UserControl>
